@@ -17,20 +17,20 @@ public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column
     private Long id;
 
-    @Column(name = "title")
+    @Column
     private String title;
 
-    @Column(name = "annotation")
+    @Column
     private String annotation;
 
-    @Column(name = "cover")
+    @Column
     @Lob
     private byte[] cover;
 
-    @Column(name = "file")
+    @Column
     @Lob
     private byte[] file;
 
@@ -83,6 +83,11 @@ public class Book implements Serializable {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 
 }
