@@ -8,10 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "authors")
+@NamedQueries(
+        @NamedQuery(name = "Author.list", query = "select a from Author a")
+)
 public class Author implements Serializable {
 
     @Id

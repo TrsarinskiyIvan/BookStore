@@ -9,10 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "books")
+@NamedQueries(
+        @NamedQuery(name = "Book.list", query = "select b from Book b")
+)
 public class Book implements Serializable {
 
     @Id
