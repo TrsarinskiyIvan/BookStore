@@ -2,6 +2,7 @@ package com.bookstore.entitys;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "authors")
@@ -29,6 +31,17 @@ public class Author implements Serializable {
 
     @Column
     private String lastName;
+
+    @Transient
+    private boolean editable;
+
+    public Author(String fistName, String lastName) {
+        this.firstName = fistName;
+        this.lastName = lastName;
+    }
+
+    public Author() {
+    }
 
     @ManyToMany(targetEntity = Book.class)
     private List<Book> books;
@@ -65,8 +78,42 @@ public class Author implements Serializable {
         this.books = books;
     }
 
+    public boolean isEditable() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return "Author{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Author other = (Author) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
 }

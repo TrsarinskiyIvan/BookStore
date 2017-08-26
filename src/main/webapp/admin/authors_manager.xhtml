@@ -2,42 +2,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>authors</title>
     </h:head>
     <h:body>
         <h3>Authors</h3>
+        <p>
+            <h:link value="admin" outcome="admin"/>
+        </p>
         <h:form>
-            <h:dataTable value="#{authorController.readAll()}" var="author">
+            <h:dataTable value="#{authorController.authors}" var="author">
                 <h:column>
                     <f:facet name="header" >Id</f:facet>
                     <h:outputText value="#{author.id}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">First name</f:facet>
-                    <h:outputText value="#{author.firstName}" rendered="#{!authorController.canEdit}"/>
-                    <h:inputText value="#{author.firstName}" rendered="#{authorController.canEdit}"/>
+                    <h:outputText value="#{author.firstName}" rendered="#{not author.editable}"/>
+                    <h:inputText value="#{author.firstName}" rendered="#{author.editable}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Last name</f:facet>
-                    <h:outputText value="#{author.lastName}" rendered="#{!authorController.canEdit}"/>
-                    <h:inputText value="#{author.lastName}" rendered="#{authorController.canEdit}"/>
+                    <h:outputText value="#{author.lastName}" rendered="#{not author.editable}"/>
+                    <h:inputText value="#{author.lastName}" rendered="#{author.editable}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Delete</f:facet>
-                    <h:commandLink value="Delete" action="#{authorController.delete()}">
-                        <f:setPropertyActionListener target="#{authorController.id}" value="#{author.id}"/>
-                    </h:commandLink>
+                    <h:commandLink value="Delete" action="#{authorController.delete(author)}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Edit</f:facet>
-                    <h:commandLink value="Update" action="#{authorController.update()}" rendered="#{authorController.canEdit}">
-                        <f:setPropertyActionListener target="#{authorController.author}" value="#{author}"/>
-                    </h:commandLink>
-                    <h:commandLink value="Edit" action="#{authorController.edit()}" rendered="#{!authorController.canEdit}"/>
+                    <h:commandLink value="Edit" action="#{authorController.edit(author)}" rendered="#{not author.editable}"/>
+                    <h:commandLink value="Update" action="#{authorController.update(author)}" rendered="#{author.editable}"/>
                 </h:column>
+
             </h:dataTable>
         </h:form>
     </h:body>

@@ -14,8 +14,8 @@ public class BookDaoImpl implements AbstractDao<Book>, Serializable {
     private EntityManager em;
 
     @Override
-    public void create(Book e) {
-        em.persist(e);
+    public void create(Book b) {
+        em.persist(b);
     }
 
     @Override
@@ -24,12 +24,12 @@ public class BookDaoImpl implements AbstractDao<Book>, Serializable {
     }
 
     @Override
-    public void update(Book e) {
-        em.merge(e);
+    public void update(Book b) {
+        em.merge(b);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Book b) {
         
     }
 

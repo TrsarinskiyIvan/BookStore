@@ -12,7 +12,7 @@ public interface AbstractDao<E> {
 
     void update(E e);
 
-    void delete(Long id);
+    void delete(E e);
 
     List<E> getAll();
 

@@ -5,7 +5,6 @@ import com.bookstore.entitys.Author;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -16,15 +15,11 @@ public class AuthorController implements Serializable {
     @EJB(beanName = "authorDao")
     private AbstractDao authorDao;
 
-    private Author author;
-
-    private String id;
-
     private String firstName;
 
     private String lastName;
 
-    private boolean canEdit = false;
+    private List<Author> authors;
 
     public AbstractDao getAuthorDao() {
         return authorDao;
@@ -32,14 +27,6 @@ public class AuthorController implements Serializable {
 
     public void setAuthorDao(AbstractDao authorDao) {
         this.authorDao = authorDao;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -58,52 +45,37 @@ public class AuthorController implements Serializable {
         this.lastName = lastName;
     }
 
-    public boolean isCanEdit() {
-        return canEdit;
+    public List<Author> getAuthors() {
+        if (authors == null) {
+            authors = authorDao.getAll();
+        }
+        return authors;
     }
 
-    public void setCanEdit(boolean canEdit) {
-        this.canEdit = canEdit;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     public String creat() {
-
-        Author tmp = new Author();
-        tmp.setFirstName(firstName);
-        tmp.setLastName(lastName);
-        authorDao.create(tmp);
-
+        authorDao.create(new Author(firstName, lastName));
+        authors = authorDao.getAll();
         return "admin";
     }
 
-    public String update() {
-        canEdit = !canEdit;
+    public String update(Author a) {
+        authorDao.update(a);
+        a.setEditable(false);
         return null;
     }
 
-    public String edit() {
-        canEdit = !canEdit;
-
+    public String edit(Author a) {
+        a.setEditable(true);
         return null;
     }
 
-    public String delete() {
-
-        authorDao.delete(Long.parseLong(id));
-
+    public String delete(Author a) {
+        authorDao.delete(a);
+        authors = authorDao.getAll();
         return null;
     }
-
-    public List<Author> readAll() {
-        return authorDao.getAll();
-    }
-
 }
