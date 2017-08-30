@@ -7,7 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Stateless(name="bookDao")
+@Stateless(name = "bookDao")
 public class BookDaoImpl implements AbstractDao<Book>, Serializable {
 
     @PersistenceContext
@@ -30,11 +30,11 @@ public class BookDaoImpl implements AbstractDao<Book>, Serializable {
 
     @Override
     public void delete(Book b) {
-        
+        em.remove(em.merge(b));
     }
 
     @Override
-    public List<Book> getAll() {
+    public List<Book> getList() {
         return em.createNamedQuery("Book.list").getResultList();
     }
 

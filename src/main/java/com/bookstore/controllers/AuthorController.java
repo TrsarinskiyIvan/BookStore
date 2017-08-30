@@ -47,7 +47,7 @@ public class AuthorController implements Serializable {
 
     public List<Author> getAuthors() {
         if (authors == null) {
-            authors = authorDao.getAll();
+            authors = authorDao.getList();
         }
         return authors;
     }
@@ -58,8 +58,10 @@ public class AuthorController implements Serializable {
 
     public String creat() {
         authorDao.create(new Author(firstName, lastName));
-        authors = authorDao.getAll();
-        return "admin";
+        authors = authorDao.getList();
+        firstName = "";
+        lastName = "";
+        return null;
     }
 
     public String update(Author a) {
@@ -75,7 +77,7 @@ public class AuthorController implements Serializable {
 
     public String delete(Author a) {
         authorDao.delete(a);
-        authors = authorDao.getAll();
+        authors = authorDao.getList();
         return null;
     }
 }

@@ -14,6 +14,6 @@ public interface AbstractDao<E> {
 
     void delete(E e);
 
-    List<E> getAll();
+    List<E> getList();
 
 }

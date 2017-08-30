@@ -11,8 +11,16 @@
         <p>
             <h:link value="admin" outcome="admin"/>
         </p>
+        <h3>Add author</h3>
         <h:form>
-            <h:dataTable value="#{authorController.authors}" var="author">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="First name: "/><h:inputText value="#{authorController.firstName}" required="true"/>
+                <h:outputLabel value="Last name: "/><h:inputText value="#{authorController.lastName}"/>
+                <h:commandButton value="Create" action="#{authorController.creat()}"/>
+            </h:panelGrid>
+        </h:form>
+        <h:form>
+            <h:dataTable id="table" value="#{authorController.authors}" var="author">
                 <h:column>
                     <f:facet name="header" >Id</f:facet>
                     <h:outputText value="#{author.id}"/>
@@ -20,12 +28,12 @@
                 <h:column>
                     <f:facet name="header">First name</f:facet>
                     <h:outputText value="#{author.firstName}" rendered="#{not author.editable}"/>
-                    <h:inputText value="#{author.firstName}" rendered="#{author.editable}"/>
+                    <h:inputText id= "fname" value="#{author.firstName}" rendered="#{author.editable}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Last name</f:facet>
                     <h:outputText value="#{author.lastName}" rendered="#{not author.editable}"/>
-                    <h:inputText value="#{author.lastName}" rendered="#{author.editable}"/>
+                    <h:inputText id= "lname" value="#{author.lastName}" rendered="#{author.editable}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Delete</f:facet>
@@ -33,10 +41,9 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Edit</f:facet>
-                    <h:commandLink value="Edit" action="#{authorController.edit(author)}" rendered="#{not author.editable}"/>
+                    <h:commandLink id="edit-link" value="Edit" action="#{authorController.edit(author)}" rendered="#{not author.editable}"/>
                     <h:commandLink value="Update" action="#{authorController.update(author)}" rendered="#{author.editable}"/>
                 </h:column>
-
             </h:dataTable>
         </h:form>
     </h:body>

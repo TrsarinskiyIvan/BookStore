@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>books</title>
+    </h:head>
+    <h:body>
+        <h3>Books</h3>
+        <p>
+            <h:link value="admin" outcome="admin"/>
+        </p>
+        <h3>Add book</h3>
+        <h:form enctype="multipart/form-data">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Title: "/><h:inputText value="#{bookController.title}" required="true"/>
+                <h:outputLabel value="File: "/><h:inputFile value="#{bookController.file}"/>
+                <h:outputLabel value="Cover: "/><h:inputFile value="#{bookController.cover}"/>
+                <h:outputLabel value="Annotation: "/><h:inputTextarea value="#{bookController.annotation}"/>
+                <h:selectManyListbox value="#{bookController.idAuthors}" size="5">
+                    <f:selectItems value="#{authorController.authors}" var="a" itemLabel="#{a}" itemValue="#{a.id}"/>
+                </h:selectManyListbox>
+                <h:commandButton value="Create" action="#{bookController.create()}"/>
+            </h:panelGrid>
+        </h:form>
+        <h3>All books</h3>
+        <h:form>
+            <h:dataTable value="#{bookController.books}" var="book">
+                <h:column>
+                    <f:facet name="header">Title</f:facet>
+                    <h:outputLabel value="#{book.title}" rendered="#{not book.editable}"/>
+                    <h:inputText value="#{book.title}" rendered="#{book.editable}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandLink value="Delete" action="#{bookController.delete(book)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:commandLink value="Update" action="#{bookController.update(book)}" rendered="#{book.editable}"/>
+                <h:commandLink value="Edit" action="#{bookController.edit(book)}" rendered="#{not book.editable}"/>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>
+

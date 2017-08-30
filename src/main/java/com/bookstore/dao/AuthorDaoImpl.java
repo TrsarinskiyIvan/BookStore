@@ -34,7 +34,7 @@ public class AuthorDaoImpl implements AbstractDao<Author>, Serializable {
     }
 
     @Override
-    public List<Author> getAll() {
+    public List<Author> getList() {
         return em.createNamedQuery("Author.list").getResultList();
     }
 
