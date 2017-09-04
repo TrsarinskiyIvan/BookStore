@@ -1,6 +1,5 @@
 package com.bookstore.controllers;
 
-import com.bookstore.dao.AbstractDao;
 import com.bookstore.entitys.Author;
 import com.bookstore.entitys.Book;
 import java.io.IOException;
@@ -14,16 +13,17 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
+import com.bookstore.dao.Dao;
 
 @Named
 @SessionScoped
 public class BookController implements Serializable {
 
     @EJB(beanName = "bookDao")
-    private AbstractDao bookDao;
+    private Dao bookDao;
 
     @EJB(beanName = "authorDao")
-    private AbstractDao authorDao;
+    private Dao authorDao;
 
     private List<Book> books;
 
@@ -48,15 +48,15 @@ public class BookController implements Serializable {
         this.books = books;
     }
 
-    public AbstractDao getAuthorDao() {
+    public Dao getAuthorDao() {
         return authorDao;
     }
 
-    public void setAuthorDao(AbstractDao authorDao) {
+    public void setAuthorDao(Dao authorDao) {
         this.authorDao = authorDao;
     }
 
-    public AbstractDao getBookDao() {
+    public Dao getBookDao() {
         return bookDao;
     }
 
@@ -68,7 +68,7 @@ public class BookController implements Serializable {
         this.idAuthors = idAuthors;
     }
 
-    public void setBookDao(AbstractDao bookDao) {
+    public void setBookDao(Dao bookDao) {
         this.bookDao = bookDao;
     }
 
@@ -123,6 +123,11 @@ public class BookController implements Serializable {
             Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);
         }
         bookDao.update(tmp);
+        books = bookDao.getList();
+        
+        title = "";
+        cover = null;
+        file = null;
 
         return null;
     }
@@ -135,12 +140,14 @@ public class BookController implements Serializable {
     public String update(Book b) {
         bookDao.update(b);
         b.setEditable(false);
+        books = bookDao.getList();
         return null;
     }
 
     public String delete(Book b) {
         System.out.println("Lanch from JSF bean" + b);
         bookDao.delete(b);
+        books = bookDao.getList();
         return null;
     }
 

@@ -1,19 +1,19 @@
 package com.bookstore.controllers;
 
-import com.bookstore.dao.AbstractDao;
 import com.bookstore.entitys.Author;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import com.bookstore.dao.Dao;
 
 @Named
 @SessionScoped
 public class AuthorController implements Serializable {
 
     @EJB(beanName = "authorDao")
-    private AbstractDao authorDao;
+    private Dao authorDao;
 
     private String firstName;
 
@@ -21,11 +21,11 @@ public class AuthorController implements Serializable {
 
     private List<Author> authors;
 
-    public AbstractDao getAuthorDao() {
+    public Dao getAuthorDao() {
         return authorDao;
     }
 
-    public void setAuthorDao(AbstractDao authorDao) {
+    public void setAuthorDao(Dao authorDao) {
         this.authorDao = authorDao;
     }
 

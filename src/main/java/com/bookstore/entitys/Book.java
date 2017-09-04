@@ -3,7 +3,6 @@ package com.bookstore.entitys;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "books")
 @NamedQueries(
-        @NamedQuery(name = "Book.list", query = "select b from Book b")
+        @NamedQuery(name = "Book.list", query = "select b from Book b order by b.title")
 )
 public class Book implements Serializable {
 
@@ -42,7 +41,7 @@ public class Book implements Serializable {
     @Lob
     private byte[] file;
 
-    @ManyToMany(targetEntity = Author.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Author.class)
     private List<Author> authors;
 
     @Transient

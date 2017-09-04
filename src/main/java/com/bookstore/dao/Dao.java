@@ -4,7 +4,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface AbstractDao<E> {
+public interface Dao<E> {
 
     void create(E e);
 

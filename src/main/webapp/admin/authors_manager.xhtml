@@ -1,26 +1,38 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>authors</title>
-    </h:head>
-    <h:body>
-        <h3>Authors</h3>
-        <p>
-            <h:link value="admin" outcome="admin"/>
-        </p>
-        <h3>Add author</h3>
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="nav-admin">
+        <ul class="nav nav-pills">
+            <li><h:link outcome="authors_manager.xhtml">authors manager</h:link></li>
+            <li><h:link outcome="books_manager.xhtml">books manager</h:link></li>
+            <li><h:link outcome="admin">users manager</h:link></li>
+        </ul>
+    </ui:define>
+    <ui:define name="content">
+        <div>
+            <button data-toggle="collapse" data-target="#add_author" class="btn btn-success">Add author</button>
+        </div>
+        <div id="add_author" class="collapse">
+            <h:form>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <div>
+                            <h:outputLabel value="First name: " for="inFirstname"/>
+                            <h:inputText id="inFirstname" class="form-control" value="#{authorController.firstName}" required="true"/>
+                        </div>
+                        <div>
+                            <h:outputLabel value="Last name: " for="inLastName"/>
+                            <h:inputText id="inLastName" class="form-control" value="#{authorController.lastName}"/>
+                        </div>
+                    </div>
+                </div>
+                <h:commandButton value="Save" action="#{authorController.creat()}" class="btn btn-success"/>
+            </h:form>
+        </div>
         <h:form>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="First name: "/><h:inputText value="#{authorController.firstName}" required="true"/>
-                <h:outputLabel value="Last name: "/><h:inputText value="#{authorController.lastName}"/>
-                <h:commandButton value="Create" action="#{authorController.creat()}"/>
-            </h:panelGrid>
-        </h:form>
-        <h:form>
-            <h:dataTable id="table" value="#{authorController.authors}" var="author">
+            <h:dataTable value="#{authorController.authors}" var="author" class="table table-striped" >
                 <h:column>
                     <f:facet name="header" >Id</f:facet>
                     <h:outputText value="#{author.id}"/>
@@ -46,6 +58,6 @@
                 </h:column>
             </h:dataTable>
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
 

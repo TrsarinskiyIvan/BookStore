@@ -1,48 +1,70 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>books</title>
-    </h:head>
-    <h:body>
-        <h3>Books</h3>
-        <p>
-            <h:link value="admin" outcome="admin"/>
-        </p>
-        <h3>Add book</h3>
-        <h:form enctype="multipart/form-data">
-            <h:panelGrid columns="2">
-                <h:outputLabel value="Title: "/><h:inputText value="#{bookController.title}" required="true"/>
-                <h:outputLabel value="File: "/><h:inputFile value="#{bookController.file}"/>
-                <h:outputLabel value="Cover: "/><h:inputFile value="#{bookController.cover}"/>
-                <h:outputLabel value="Annotation: "/><h:inputTextarea value="#{bookController.annotation}"/>
-                <h:selectManyListbox value="#{bookController.idAuthors}" size="5">
-                    <f:selectItems value="#{authorController.authors}" var="a" itemLabel="#{a}" itemValue="#{a.id}"/>
-                </h:selectManyListbox>
-                <h:commandButton value="Create" action="#{bookController.create()}"/>
-            </h:panelGrid>
-        </h:form>
-        <h3>All books</h3>
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="nav-admin">
+        <ul class="nav nav-pills">
+            <li><h:link outcome="authors_manager.xhtml">authors manager</h:link></li>
+            <li><h:link outcome="books_manager.xhtml">books manager</h:link></li>
+            <li><h:link outcome="admin">users manager</h:link></li>
+        </ul>
+    </ui:define>
+    <ui:define name="content">
+        <p><button data-toggle="collapse" data-target="#add_book" class="btn btn-success">Add book</button></p>
+        <div id="add_book" class="collapse">
+            <h:form enctype="multipart/form-data">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <div>
+                            <h:outputLabel value="Title " for="inTitle"/>
+                            <h:inputText id="inTitle" class="form-control" value="#{bookController.title}" required="true"/>
+                        </div>
+                        <div>
+                            <h:outputLabel value="File " for="inFile"/>
+                            <h:inputFile id="inFile" class="form-control" value="#{bookController.file}"/>
+                        </div>
+                        <div>
+                            <h:outputLabel value="Cover " for="inCover"/>
+                            <h:inputFile id="inCover" class="form-control" value="#{bookController.cover}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <h:outputLabel value="Annotation " for="inAnnotation"/>
+                        <h:inputTextarea id="inAnnotation" class="form-control" value="#{bookController.annotation}"/>
+                    </div>
+                    <div class="col-md-3">
+                        <h:outputLabel value="Author/Authors " for="inAuthors"/>
+                        <h:selectManyListbox id="inAuthors" class="form-control" value="#{bookController.idAuthors}" size="5">
+                            <f:selectItems value="#{authorController.authors}" var="a" itemLabel="#{a}" itemValue="#{a.id}"/>
+                        </h:selectManyListbox>
+                    </div>
+                </div>
+                <h:commandButton value="Create" class="btn btn-success" action="#{bookController.create()}"/>
+            </h:form>
+        </div>
         <h:form>
-            <h:dataTable value="#{bookController.books}" var="book">
+            <h:dataTable value="#{bookController.books}" var="book" class="table table-striped">
+                <h:column>
+                    <f:facet name="header">Id</f:facet>
+                    <h:outputText value="#{book.id}"/>
+                </h:column>
                 <h:column>
                     <f:facet name="header">Title</f:facet>
-                    <h:outputLabel value="#{book.title}" rendered="#{not book.editable}"/>
+                    <h:outputText value="#{book.title}" rendered="#{not book.editable}"/>
                     <h:inputText value="#{book.title}" rendered="#{book.editable}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Delete</f:facet>
-                <h:commandLink value="Delete" action="#{bookController.delete(book)}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Edit</f:facet>
-                <h:commandLink value="Update" action="#{bookController.update(book)}" rendered="#{book.editable}"/>
-                <h:commandLink value="Edit" action="#{bookController.edit(book)}" rendered="#{not book.editable}"/>
-            </h:column>
-        </h:dataTable>
-    </h:form>
-</h:body>
-</html>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Delete</f:facet>
+                    <h:commandLink value="Delete" action="#{bookController.delete(book)}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Edit</f:facet>
+                    <h:commandLink value="Update" action="#{bookController.update(book)}" rendered="#{book.editable}"/>
+                    <h:commandLink value="Edit" action="#{bookController.edit(book)}" rendered="#{not book.editable}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
 

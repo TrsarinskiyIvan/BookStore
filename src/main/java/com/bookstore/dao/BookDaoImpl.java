@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless(name = "bookDao")
-public class BookDaoImpl implements AbstractDao<Book>, Serializable {
+public class BookDaoImpl implements Dao<Book>, Serializable {
 
     @PersistenceContext
     private EntityManager em;

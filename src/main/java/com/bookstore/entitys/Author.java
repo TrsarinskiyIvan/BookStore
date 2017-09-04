@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "authors")
 @NamedQueries(
-        @NamedQuery(name = "Author.list", query = "select a from Author a")
+        @NamedQuery(name = "Author.list", query = "select a from Author a order by a.firstName")
 )
 public class Author implements Serializable {
 
@@ -44,7 +44,7 @@ public class Author implements Serializable {
     public Author() {
     }
 
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authors", cascade = CascadeType.REMOVE)
     private List<Book> books;
 
     public Long getId() {
