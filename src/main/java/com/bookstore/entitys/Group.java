@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "goups")
+@Table(name = "groups")
 public class Group implements Serializable {
 
     @Id
@@ -24,6 +24,14 @@ public class Group implements Serializable {
     @ManyToOne(targetEntity = User.class)
     private List<User> users;
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public Long getId() {
         return id;
     }
@@ -32,11 +40,11 @@ public class Group implements Serializable {
         this.id = id;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public String getName() {
+        return name;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setName(String name) {
+        this.name = name;
     }
 }
