@@ -21,7 +21,8 @@
     <welcome-file-list>
         <welcome-file>faces/user/index.xhtml</welcome-file>
     </welcome-file-list>
-<!--    <security-constraint>
+    <!--Security-->
+    <security-constraint>
         <web-resource-collection>
             <web-resource-name>Admin pages</web-resource-name>
             <description/>
@@ -32,10 +33,6 @@
         <auth-constraint>
             <role-name>admin</role-name>
         </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
     </security-constraint>
     <security-constraint>
         <web-resource-collection>
@@ -49,14 +46,10 @@
             <role-name>admin</role-name>
             <role-name>user</role-name>
         </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>file</realm-name>
+        <realm-name>sbRealm</realm-name>
         <form-login-config>
             <form-login-page>/login.xhtml</form-login-page>
             <form-error-page>/login.xhtml</form-error-page>
@@ -69,5 +62,5 @@
     <security-role>
         <description/>
         <role-name>user</role-name>
-    </security-role>-->
+    </security-role>
 </web-app>
