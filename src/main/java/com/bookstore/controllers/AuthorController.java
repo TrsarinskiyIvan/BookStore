@@ -26,7 +26,9 @@ public class AuthorController implements Serializable {
 
     public String creat() {
         authorDao.create(new Author(firstName, lastName));
-        authors = authorDao.getList();
+        if (authors != null) {
+            authors = authorDao.getList();
+        }
         firstName = "";
         lastName = "";
         return null;
