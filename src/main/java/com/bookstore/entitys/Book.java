@@ -3,8 +3,10 @@ package com.bookstore.entitys;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,14 +33,17 @@ public class Book implements Serializable {
     private String title;
 
     @Column
+    @Basic(fetch = FetchType.LAZY)
     private String annotation;
 
     @Column
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] cover;
 
     @Column
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] file;
 
     @ManyToMany(targetEntity = Author.class)

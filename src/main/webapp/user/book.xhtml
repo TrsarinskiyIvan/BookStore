@@ -7,6 +7,7 @@
     <ui:define name="content">
 
         <h3><h:outputLabel value="#{bookController.getBook()}"/></h3>
+        <p><h:outputText value="#{bookController.getBook().annotation}"/></p>
         <h4>Author(s):</h4>
         <h:dataTable value="#{bookController.getBook().authors}" var="author">
             <h:column>
