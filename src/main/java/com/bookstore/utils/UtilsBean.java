@@ -17,6 +17,9 @@ public abstract class UtilsBean {
         ExternalContext ex = fc.getExternalContext();
 
         String id = ex.getRequestParameterMap().get(key);
+        if (id == null) {
+            return null;
+        }
 
         return Long.parseLong(id);
     }

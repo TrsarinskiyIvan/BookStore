@@ -46,11 +46,14 @@ public class Book implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     private byte[] file;
 
-    @ManyToMany(targetEntity = Author.class)
+    @ManyToMany(mappedBy = "books")
     private List<Author> authors;
 
     @Transient
     private boolean editable;
+
+    public Book() {
+    }
 
     public Long getId() {
         return id;

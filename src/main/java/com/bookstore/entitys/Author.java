@@ -6,9 +6,12 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,19 +36,22 @@ public class Author implements Serializable {
     @Column
     private String lastName;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "authors_books",
+            joinColumns = @JoinColumn(name = "authors_ID"),
+            inverseJoinColumns = @JoinColumn(name = "books_ID"))
+    private List<Book> books;
+
     @Transient
     private boolean editable;
+
+    public Author() {
+    }
 
     public Author(String fistName, String lastName) {
         this.firstName = fistName;
         this.lastName = lastName;
     }
-
-    public Author() {
-    }
-
-    @ManyToMany(mappedBy = "authors", cascade = CascadeType.REMOVE)
-    private List<Book> books;
 
     public Long getId() {
         return id;

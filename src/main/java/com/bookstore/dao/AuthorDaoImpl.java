@@ -1,8 +1,8 @@
 package com.bookstore.dao;
 
 import com.bookstore.entitys.Author;
-import com.bookstore.entitys.Book;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,17 +31,12 @@ public class AuthorDaoImpl implements Dao<Author>, Serializable {
 
     @Override
     public void delete(Author a) {
-        Author tmp = em.merge(a);
-        List<Book> books = tmp.getBooks();
-        for (Book b : books) {
-            em.remove(b);
-        }
-        em.remove(tmp);
+        em.remove(em.merge(a));
     }
 
     @Override
     public List<Author> getList() {
-        return em.createNamedQuery("Author.list").getResultList();
+        return new ArrayList<>(em.createNamedQuery("Author.list").getResultList());
     }
 
 }

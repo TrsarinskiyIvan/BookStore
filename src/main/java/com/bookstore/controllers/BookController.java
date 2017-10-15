@@ -15,7 +15,9 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 import com.bookstore.dao.Dao;
 import com.bookstore.utils.UtilsBean;
+import java.io.OutputStream;
 import java.util.Objects;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 @Named
@@ -28,7 +30,7 @@ public class BookController implements Serializable {
     @EJB(beanName = "authorDao")
     private Dao authorDao;
 
-    private Book book;
+    private Book currentBook;
 
     private List<Book> books;
 
@@ -110,14 +112,17 @@ public class BookController implements Serializable {
     }
     //user's methods
 
-    public Book getBook() {
+    public Book getCurrentBook() {
 
         Long id = UtilsBean.getId(FacesContext.getCurrentInstance(), "id_book");
-        if (book==null || !Objects.equals(id, book.getId())) {
-            book = (Book) bookDao.read(id);
+        if (id == null) {
+            return this.currentBook;
+        }
+        if (currentBook == null || !Objects.equals(id, currentBook.getId())) {
+            currentBook = (Book) bookDao.read(id);
         }
 
-        return book;
+        return this.currentBook;
     }
 
 //admin's methods
@@ -139,7 +144,7 @@ public class BookController implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        bookDao.update(tmp);
+        bookDao.create(tmp);
         books = bookDao.getList();
 
         title = "";

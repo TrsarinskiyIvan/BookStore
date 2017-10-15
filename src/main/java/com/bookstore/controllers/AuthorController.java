@@ -9,6 +9,7 @@ import javax.inject.Named;
 import com.bookstore.dao.Dao;
 import com.bookstore.utils.UtilsBean;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.NotNull;
 
 @Named
 @SessionScoped
@@ -17,9 +18,13 @@ public class AuthorController implements Serializable {
     @EJB(beanName = "authorDao")
     private Dao authorDao;
 
+    @NotNull
     private String firstName;
 
+    @NotNull
     private String lastName;
+
+    private Author author;
 
     private List<Author> authors;
 //admin's methods
@@ -55,7 +60,14 @@ public class AuthorController implements Serializable {
     public Author getAuthor() {
 
         Long id = UtilsBean.getId(FacesContext.getCurrentInstance(), "id_author");
+        if (author == null || !id.equals(author.getId())) {
+            author = (Author) authorDao.read(id);
+        }
 
+        return author;
+    }
+
+    public Author getAuthor(Long id) {
         return (Author) authorDao.read(id);
     }
 

@@ -6,10 +6,20 @@
 
     <ui:define name="content">
 
-        <h3><h:outputLabel value="#{bookController.getBook()}"/></h3>
-        <p><h:outputText value="#{bookController.getBook().annotation}"/></p>
+        <h3><h:outputLabel value="#{bookController.currentBook}"/></h3>
+        <div>
+            <h:graphicImage value="/image/#{bookController.currentBook.id}"/>
+        </div>
+        <p><h:outputText value="#{bookController.currentBook.annotation}"/></p>
+        <p>
+            <h:form>
+                <h:commandLink value="download" action="#{downloader.download()}">
+                    <f:setPropertyActionListener value="#{bookController.currentBook.id}" target="#{downloader.id}"/>
+                </h:commandLink>
+            </h:form>
+        </p>
         <h4>Author(s):</h4>
-        <h:dataTable value="#{bookController.getBook().authors}" var="author">
+        <h:dataTable value="#{bookController.currentBook.authors}" var="author">
             <h:column>
                 <h:outputText value="#{author}"/>
             </h:column>
