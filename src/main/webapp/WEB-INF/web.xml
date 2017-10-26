@@ -32,7 +32,7 @@
         <welcome-file>faces/user/home.xhtml</welcome-file>
     </welcome-file-list>
     <!--Security-->
-    <security-constraint>
+<!--    <security-constraint>
         <web-resource-collection>
             <web-resource-name>Admin pages</web-resource-name>
             <description/>
@@ -72,5 +72,5 @@
     <security-role>
         <description/>
         <role-name>user</role-name>
-    </security-role>
+    </security-role>-->
 </web-app>

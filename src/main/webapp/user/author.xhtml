@@ -5,11 +5,13 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:define name="content">
-        <h3><h:outputLabel value="#{authorController.getAuthor()}"/></h3>
+        <h3><h:outputLabel value="#{authorController.currentAuthor}"/></h3>
         <h4>Books:</h4>
-        <h:dataTable value="#{authorController.getAuthor().books}" var="book">
+        <h:dataTable value="#{authorController.currentAuthor.books}" var="book">
             <h:column>
-                <h:outputText value="#{book}"/>
+                <h:link value="#{book}" outcome="book">
+                    <f:param name="id_book" value="#{book.id}"/>
+                </h:link>
             </h:column>
         </h:dataTable>
     </ui:define>

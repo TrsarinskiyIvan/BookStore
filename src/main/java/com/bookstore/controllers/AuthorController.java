@@ -7,7 +7,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import com.bookstore.dao.Dao;
+import com.bookstore.utils.Paginator;
 import com.bookstore.utils.UtilsBean;
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.NotNull;
 
@@ -24,47 +26,63 @@ public class AuthorController implements Serializable {
     @NotNull
     private String lastName;
 
-    private Author author;
+    private Author currentAuthor;
 
     private List<Author> authors;
-//admin's methods
 
-    public String creat() {
-        authorDao.create(new Author(firstName, lastName));
-        if (authors != null) {
-            authors = authorDao.getList();
-        }
-        firstName = "";
-        lastName = "";
-        return null;
+    private List<Author> subList;
+
+    private Paginator paginator;
+
+    public AuthorController() {
     }
 
-    public String update(Author a) {
+    @PostConstruct
+    private void init() {
+        authors = authorDao.getList();
+        paginator = new Paginator(authors);
+        subList = paginator.firstSheet();
+    }
+
+    public List<Author> getSubList() {
+        return subList;
+    }
+
+    public void setSubList(List<Author> subList) {
+        this.subList = subList;
+    }
+
+//admin's methods
+    public void creat() {
+        authorDao.create(new Author(firstName, lastName));
+        init();
+        firstName = null;
+        lastName = null;
+    }
+
+    public void update(Author a) {
         authorDao.update(a);
         a.setEditable(false);
-        return null;
     }
 
-    public String edit(Author a) {
+    public void edit(Author a) {
         a.setEditable(true);
-        return null;
     }
 
-    public String delete(Author a) {
+    public void delete(Author a) {
         authorDao.delete(a);
-        authors = authorDao.getList();
-        return null;
+        init();
     }
 
 //    user's methods
-    public Author getAuthor() {
+    public Author getCurrentAuthor() {
 
         Long id = UtilsBean.getId(FacesContext.getCurrentInstance(), "id_author");
-        if (author == null || !id.equals(author.getId())) {
-            author = (Author) authorDao.read(id);
+        if (currentAuthor == null || !id.equals(currentAuthor.getId())) {
+            currentAuthor = (Author) authorDao.read(id);
         }
 
-        return author;
+        return currentAuthor;
     }
 
     public Author getAuthor(Long id) {
@@ -106,4 +124,13 @@ public class AuthorController implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void next() {
+        subList = paginator.nextSheet();
+    }
+
+    public void prev() {
+        subList = paginator.prevSheet();
+    }
+
 }

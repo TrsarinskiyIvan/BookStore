@@ -3,7 +3,6 @@ package com.bookstore.dao;
 import com.bookstore.entitys.Author;
 import com.bookstore.entitys.Book;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,12 +21,12 @@ public class BookDaoImpl implements Dao<Book>, Serializable {
         List<Book> books = null;
 
         for (Author a : authors) {
-            
+
             books = a.getBooks();
             books.add(b);
             a.setBooks(books);
             em.merge(a);
-            
+
         }
     }
 

@@ -14,8 +14,10 @@
         <div>
             <button data-toggle="collapse" data-target="#add_author" class="btn btn-success">Add author</button>
         </div>
-        <div id="add_author" class="collapse">
-            <h:form>
+        <h:form>
+            <div id="add_author" class="collapse">
+
+
                 <div class="form-group row">
                     <div class="col-md-4">
                         <div>
@@ -28,11 +30,11 @@
                         </div>
                     </div>
                 </div>
-                <h:commandButton value="Save" action="#{authorController.creat()}" class="btn btn-success"/>
-            </h:form>
-        </div>
+                <h:commandButton value="Save" class="btn btn-success" actionListener="#{authorController.creat()}"/>
+            </div>
+        </h:form>
         <h:form>
-            <h:dataTable value="#{authorController.authors}" var="author" class="table table-striped" >
+            <h:dataTable id= "authors_table" value="#{authorController.subList}" var="author" class="table table-striped" >
                 <h:column>
                     <f:facet name="header" >Id</f:facet>
                     <h:outputText value="#{author.id}"/>
@@ -49,15 +51,21 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Delete</f:facet>
-                    <h:commandLink value="Delete" action="#{authorController.delete(author)}"/>
+                    <h:commandLink id="delete_btn" value="Delete" actionListener="#{authorController.delete(author)}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Edit</f:facet>
-                    <h:commandLink id="edit-link" value="Edit" action="#{authorController.edit(author)}" rendered="#{not author.editable}"/>
-                    <h:commandLink value="Update" action="#{authorController.update(author)}" rendered="#{author.editable}"/>
+                    <h:commandLink id="edit-link" value="Edit" actionListener="#{authorController.edit(author)}" rendered="#{not author.editable}"/>
+                    <h:commandLink value="Update" actionListener="#{authorController.update(author)}" rendered="#{author.editable}"/>
                 </h:column>
             </h:dataTable>
+
+            <h:commandButton  id="next_btn" value="Next">
+                <f:ajax event="click" listener="#{authorController.next()}" render="authors_table"/>
+            </h:commandButton>
+
         </h:form>
+
     </ui:define>
 </ui:composition>
 

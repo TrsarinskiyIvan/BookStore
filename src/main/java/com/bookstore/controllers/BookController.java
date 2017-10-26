@@ -15,9 +15,7 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 import com.bookstore.dao.Dao;
 import com.bookstore.utils.UtilsBean;
-import java.io.OutputStream;
 import java.util.Objects;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 @Named
@@ -150,6 +148,7 @@ public class BookController implements Serializable {
         title = "";
         cover = null;
         file = null;
+        annotation = "";
 
         return null;
     }

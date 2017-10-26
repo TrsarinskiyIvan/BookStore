@@ -2,6 +2,8 @@ package com.bookstore.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
@@ -43,5 +45,12 @@ public abstract class UtilsBean {
         } else {
             return new DefaultStreamedContent(new ByteArrayInputStream(arr));
         }
+    }
+
+    public static ArrayList getRenge(List l, int startItem) {
+
+        ArrayList subList = (ArrayList) l.subList(startItem, startItem + 10);
+
+        return subList;
     }
 }

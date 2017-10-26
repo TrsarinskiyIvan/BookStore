@@ -6,11 +6,14 @@
 
     <ui:define name="content">
 
-        <h3><h:outputLabel value="#{bookController.currentBook}"/></h3>
+        <h3>
+            <h:outputLabel value="#{bookController.currentBook}"/>
+        </h3>
         <div>
-            <h:graphicImage value="/image/#{bookController.currentBook.id}"/>
+            <h:graphicImage value="/image/#{bookController.currentBook.id}" width="200px"/>
         </div>
-        <p><h:outputText value="#{bookController.currentBook.annotation}"/></p>
+        <p>
+            <h:outputText value="#{bookController.currentBook.annotation}"/></p>
         <p>
             <h:form>
                 <h:commandLink value="download" action="#{downloader.download()}">
@@ -21,7 +24,9 @@
         <h4>Author(s):</h4>
         <h:dataTable value="#{bookController.currentBook.authors}" var="author">
             <h:column>
-                <h:outputText value="#{author}"/>
+                <h:link value="#{author}" outcome="author">
+                    <f:param name="id_author" value="#{author.id}"/>
+                </h:link>
             </h:column>
         </h:dataTable>
 
