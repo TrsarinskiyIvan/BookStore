@@ -23,10 +23,7 @@ import javax.faces.context.FacesContext;
 public class BookController implements Serializable {
 
     @EJB(beanName = "bookDao")
-    private Dao bookDao;
-
-    @EJB(beanName = "authorDao")
-    private Dao authorDao;
+    private Dao<Book> bookDao;
 
     private Book currentBook;
 
@@ -53,13 +50,13 @@ public class BookController implements Serializable {
         this.books = books;
     }
 
-    public Dao getAuthorDao() {
-        return authorDao;
-    }
-
-    public void setAuthorDao(Dao authorDao) {
-        this.authorDao = authorDao;
-    }
+//    public Dao getAuthorDao() {
+//        return authorDao;
+//    }
+//
+//    public void setAuthorDao(Dao authorDao) {
+//        this.authorDao = authorDao;
+//    }
 
     public Dao getBookDao() {
         return bookDao;
@@ -117,7 +114,7 @@ public class BookController implements Serializable {
             return this.currentBook;
         }
         if (currentBook == null || !Objects.equals(id, currentBook.getId())) {
-            currentBook = (Book) bookDao.read(id);
+            currentBook = bookDao.read(id);
         }
 
         return this.currentBook;
@@ -127,8 +124,14 @@ public class BookController implements Serializable {
     public String create() {
 
         List<Author> authors = new ArrayList();
+//        for (String s : idAuthors) {
+//            authors.add((Author) authorDao.read(Long.valueOf(s)));
+//        }
+
         for (String s : idAuthors) {
-            authors.add((Author) authorDao.read(Long.valueOf(s)));
+            Author a = new Author();
+            a.setId(Long.valueOf(s));
+            authors.add(a);
         }
 
         Book tmp = new Book();

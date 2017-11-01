@@ -4,30 +4,22 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "books")
 @NamedQueries(
         @NamedQuery(name = "Book.list", query = "select b from Book b order by b.title")
 )
-public class Book implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
+public class Book extends AbstractEntity implements Serializable {
 
     @Column
     private String title;
@@ -49,18 +41,7 @@ public class Book implements Serializable {
     @ManyToMany(mappedBy = "books")
     private List<Author> authors;
 
-    @Transient
-    private boolean editable;
-
     public Book() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -102,13 +83,10 @@ public class Book implements Serializable {
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
-
-    public boolean isEditable() {
-        return editable;
-    }
-
-    public void setEditable(boolean editable) {
-        this.editable = editable;
+    
+    public void addAuthor(Author a){
+        a.addBook(this);
+        authors.add(a);
     }
 
     @Override

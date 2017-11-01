@@ -7,7 +7,7 @@
     <ui:define name="content">
 
         <h:form>
-            <h:dataTable id="authors_table" value="#{authorController.subList}" var="author">
+            <h:dataTable id="authors_table" value="#{authorControllerAlter.subList}" var="author">
                 <h:column>
                     <h:link value="#{author}" outcome="author">
                         <f:param name="id_author" value="#{author.id}"/>
@@ -16,10 +16,10 @@
             </h:dataTable>
 
             <h:commandButton  id="next_btn" value="Next">
-                <f:ajax event="click" listener="#{authorController.next()}" render="authors_table"/>
+                <f:ajax event="click" listener="#{authorControllerAlter.nextSheet()}" render="authors_table"/>
             </h:commandButton>
             <h:commandButton id="prev_btn" value="Prev">
-                <f:ajax event="click" listener="#{authorController.prev()}" render="authors_table"/>
+                <f:ajax event="click" listener="#{authorControllerAlter.prevSheet()}" render="authors_table"/>
             </h:commandButton>
         </h:form>
 

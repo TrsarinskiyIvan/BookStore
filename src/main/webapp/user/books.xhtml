@@ -6,14 +6,23 @@
 
     <ui:define name="content">
 
-        <h:dataTable value="#{bookController.books}" var="book">
-            <h:column>
-                <h:link value="#{book}" outcome="book">
-                    <f:param name="id_book" value="#{book.id}"/>
-                </h:link>
-            </h:column>
-        </h:dataTable>
-
+        <h:form>
+            <h:dataTable id="authors_table" value="#{bookController.books}" var="book">
+                <h:column>
+                    <div>
+                        <div>
+                            <h:graphicImage value="/image/#{book.id}" width="200px"/>
+                        </div>
+                        <h:link value="#{book}" outcome="book">
+                            <f:param name="id_book" value="#{book.id}"/>
+                        </h:link>
+                    </div>
+                </h:column>
+            </h:dataTable>
+<!--            <h:commandButton value="next">
+                <f:ajax event="click" render="author_table" listener=""/>
+            </h:commandButton>-->
+        </h:form>
     </ui:define>
 
 </ui:composition>

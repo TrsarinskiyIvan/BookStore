@@ -9,8 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
+//import org.primefaces.model.DefaultStreamedContent;
+//import org.primefaces.model.StreamedContent;
 
 public abstract class UtilsBean {
 
@@ -38,14 +38,14 @@ public abstract class UtilsBean {
         return array;
     }
 
-    public static StreamedContent getImage(FacesContext fc, byte[] arr) {
-
-        if (fc.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-            return new DefaultStreamedContent();
-        } else {
-            return new DefaultStreamedContent(new ByteArrayInputStream(arr));
-        }
-    }
+//    public static StreamedContent getImage(FacesContext fc, byte[] arr) {
+//
+//        if (fc.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+//            return new DefaultStreamedContent();
+//        } else {
+//            return new DefaultStreamedContent(new ByteArrayInputStream(arr));
+//        }
+//    }
 
     public static ArrayList getRenge(List l, int startItem) {
 

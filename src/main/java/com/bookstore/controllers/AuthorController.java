@@ -32,7 +32,7 @@ public class AuthorController implements Serializable {
 
     private List<Author> subList;
 
-    private Paginator paginator;
+    private Paginator<Author> paginator;
 
     public AuthorController() {
     }
@@ -85,9 +85,9 @@ public class AuthorController implements Serializable {
         return currentAuthor;
     }
 
-    public Author getAuthor(Long id) {
-        return (Author) authorDao.read(id);
-    }
+//    public Author getAuthor(Long id) {
+//        return (Author) authorDao.read(id);
+//    }
 
 //    getters and setters
     public Dao getAuthorDao() {

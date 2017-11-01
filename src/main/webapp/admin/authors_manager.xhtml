@@ -22,19 +22,19 @@
                     <div class="col-md-4">
                         <div>
                             <h:outputLabel value="First name: " for="inFirstname"/>
-                            <h:inputText id="inFirstname" class="form-control" value="#{authorController.firstName}"/>
+                            <h:inputText id="inFirstname" class="form-control" value="#{authorControllerAlter.firstName}"/>
                         </div>
                         <div>
                             <h:outputLabel value="Last name: " for="inLastName"/>
-                            <h:inputText id="inLastName" class="form-control" value="#{authorController.lastName}"/>
+                            <h:inputText id="inLastName" class="form-control" value="#{authorControllerAlter.lastName}"/>
                         </div>
                     </div>
                 </div>
-                <h:commandButton value="Save" class="btn btn-success" actionListener="#{authorController.creat()}"/>
+                <h:commandButton value="Save" class="btn btn-success" actionListener="#{authorControllerAlter.create()}"/>
             </div>
         </h:form>
         <h:form>
-            <h:dataTable id= "authors_table" value="#{authorController.subList}" var="author" class="table table-striped" >
+            <h:dataTable id= "authors_table" value="#{authorControllerAlter.subList}" var="author" class="table table-striped" >
                 <h:column>
                     <f:facet name="header" >Id</f:facet>
                     <h:outputText value="#{author.id}"/>
@@ -51,19 +51,18 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Delete</f:facet>
-                    <h:commandLink id="delete_btn" value="Delete" actionListener="#{authorController.delete(author)}"/>
+                    <h:commandLink id="delete_btn" value="Delete" actionListener="#{authorControllerAlter.delete(author)}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Edit</f:facet>
-                    <h:commandLink id="edit-link" value="Edit" actionListener="#{authorController.edit(author)}" rendered="#{not author.editable}"/>
-                    <h:commandLink value="Update" actionListener="#{authorController.update(author)}" rendered="#{author.editable}"/>
+                    <h:commandLink id="edit-link" value="Edit" actionListener="#{authorControllerAlter.edit(author)}" rendered="#{not author.editable}"/>
+                    <h:commandLink value="Update" actionListener="#{authorControllerAlter.update(author)}" rendered="#{author.editable}"/>
                 </h:column>
             </h:dataTable>
 
             <h:commandButton  id="next_btn" value="Next">
-                <f:ajax event="click" listener="#{authorController.next()}" render="authors_table"/>
+                <f:ajax event="click" listener="#{authorControllerAlter.nextSheet()}" render="authors_table"/>
             </h:commandButton>
-
         </h:form>
 
     </ui:define>

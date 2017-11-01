@@ -4,16 +4,16 @@ import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface Dao<E> {
+public interface Dao<T> {
 
-    void create(E e);
+    void create(T t);
 
-    E read(Long id);
+    T read(Long id);
 
-    void update(E e);
+    void update(T t);
 
-    void delete(E e);
+    void delete(T t);
 
-    List<E> getList();
+    List<T> getList();
 
 }

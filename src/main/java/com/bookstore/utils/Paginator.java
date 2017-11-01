@@ -7,9 +7,9 @@ public class Paginator<T> implements Serializable {
 
     private List<T> list;
 
-    private List<T> subList;
+    private List<T> sheet;
 
-    private int currentSheet = 0;
+    private int numberOfSheet = 0;
 
     private int range;
 
@@ -28,29 +28,29 @@ public class Paginator<T> implements Serializable {
 
     public List<T> nextSheet() {
 
-        currentSheet = (currentSheet + 1) % quantitySheets;
-        subList = goToSheet(currentSheet);
+        numberOfSheet = (numberOfSheet + 1) % quantitySheets;
+        sheet = goToSheet(numberOfSheet);
 
-        return subList;
+        return sheet;
     }
 
     public List<T> prevSheet() {
 
-        currentSheet = (currentSheet + quantitySheets + 1) % (quantitySheets);
-        subList = goToSheet(currentSheet);
+        numberOfSheet = (numberOfSheet + quantitySheets + 1) % (quantitySheets);
+        sheet = goToSheet(numberOfSheet);
 
-        return subList;
+        return sheet;
     }
 
     public List<T> goToSheet(int number) {
 
         if (number != quantitySheets - 1) {
-            subList = list.subList(number * range, range * (number + 1));
+            sheet = list.subList(number * range, range * (number + 1));
         } else {
-            subList = list.subList(number * range, list.size());
+            sheet = list.subList(number * range, list.size());
         }
 
-        return subList;
+        return sheet;
     }
 
     public List<T> firstSheet() {
@@ -58,7 +58,7 @@ public class Paginator<T> implements Serializable {
     }
 
     public int numberOfCurrentSheet() {
-        return currentSheet;
+        return numberOfSheet;
     }
 
     public int getRange() {
