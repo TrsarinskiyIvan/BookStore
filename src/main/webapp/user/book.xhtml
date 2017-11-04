@@ -7,22 +7,22 @@
     <ui:define name="content">
 
         <h3>
-            <h:outputLabel value="#{bookController.currentBook}"/>
+            <h:outputLabel value="#{bookControllerAlter.getCurrentBook()}"/>
         </h3>
         <div>
-            <h:graphicImage value="/image/#{bookController.currentBook.id}" width="200px"/>
+            <h:graphicImage value="/image/#{bookControllerAlter.getCurrentBook().id}" width="200px"/>
         </div>
         <p>
-            <h:outputText value="#{bookController.currentBook.annotation}"/></p>
+            <h:outputText value="#{bookControllerAlter.getCurrentBook().annotation}"/></p>
         <p>
             <h:form>
-                <h:commandLink value="download" actionListener="#{downloader.download()}">
-                    <f:setPropertyActionListener value="#{bookController.currentBook.id}" target="#{downloader.id}"/>
+                <h:commandLink value="download" action="#{downloader.download()}">
+                    <f:setPropertyActionListener value="#{bookControllerAlter.getCurrentBook().id}" target="#{downloader.id}"/>
                 </h:commandLink>
             </h:form>
         </p>
         <h4>Author(s):</h4>
-        <h:dataTable value="#{bookController.currentBook.authors}" var="author">
+        <h:dataTable value="#{bookControllerAlter.getCurrentBook().authors}" var="author">
             <h:column>
                 <h:link value="#{author}" outcome="author">
                     <f:param name="id_author" value="#{author.id}"/>

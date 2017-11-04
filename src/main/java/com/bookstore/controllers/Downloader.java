@@ -7,13 +7,12 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class Downloader implements Serializable {
 
     @EJB(beanName = "bookDao")
