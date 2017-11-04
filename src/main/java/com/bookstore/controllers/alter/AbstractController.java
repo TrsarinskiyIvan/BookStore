@@ -14,7 +14,7 @@ public abstract class AbstractController<T extends AbstractEntity> implements Se
     
     private List<T> subList;
     
-    private T currentObj;
+    private T currentT;
     
     private Paginator<T> paginator;
     
@@ -24,7 +24,7 @@ public abstract class AbstractController<T extends AbstractEntity> implements Se
         subList = paginator.firstSheet();
     }
     
-    public abstract Dao getDao();
+    public abstract Dao<T> getDao();
     
     public abstract void create();
     
@@ -49,14 +49,14 @@ public abstract class AbstractController<T extends AbstractEntity> implements Se
         return subList;
     }
     
-    protected T getCurrentObj(String key) {
+    protected T getCurrentT(String key) {
         
         Long id = getId(key);
         
-        if (currentObj == null || !currentObj.getId().equals(id)) {
-            currentObj = (T) getDao().read(id);
+        if (currentT == null || !currentT.getId().equals(id)) {
+            currentT = getDao().read(id);
         }
-        return currentObj;
+        return currentT;
     }
     
     public void nextSheet() {

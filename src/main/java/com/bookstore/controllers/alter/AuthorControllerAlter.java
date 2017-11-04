@@ -12,7 +12,7 @@ import javax.inject.Named;
 public class AuthorControllerAlter extends AbstractController<Author> {
 
     @EJB(beanName = "authorDao")
-    private Dao dao;
+    private Dao<Author> dao;
 
     private String firstName;
 
@@ -31,7 +31,7 @@ public class AuthorControllerAlter extends AbstractController<Author> {
     }
 
     public Author getCurrentAuthor() {
-        return (Author) getCurrentObj("id_author");
+        return getCurrentT("id_author");
     }
 
     @Override

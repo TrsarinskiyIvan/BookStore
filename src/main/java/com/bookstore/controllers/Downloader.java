@@ -4,24 +4,26 @@ import com.bookstore.dao.Dao;
 import com.bookstore.entitys.Book;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 @Named
-@RequestScoped
-public class Downloader {
+@SessionScoped
+public class Downloader implements Serializable {
 
     @EJB(beanName = "bookDao")
-    private Dao bookDao;
+    private Dao<Book> bookDao;
 
     private Long id;
 
     public void download() throws IOException {
 
-        byte[] file = ((Book) bookDao.read(id)).getFile();
+        byte[] file = bookDao.read(id).getFile();
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
 
