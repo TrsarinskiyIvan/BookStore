@@ -36,7 +36,7 @@
                     <div class="col-md-3">
                         <h:outputLabel value="Author/Authors " for="inAuthors"/>
                         <h:selectManyListbox id="inAuthors" class="form-control" value="#{bookController.idAuthors}" size="5">
-                            <f:selectItems value="#{authorController.authors}" var="a" itemLabel="#{a}" itemValue="#{a.id}"/>
+                            <f:selectItems value="#{authorController.list}" var="a" itemLabel="#{a}" itemValue="#{a.id}"/>
                         </h:selectManyListbox>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
             </h:form>
         </div>
         <h:form>
-            <h:dataTable value="#{bookController.books}" var="book" class="table table-striped">
+            <h:dataTable value="#{bookController.subList}" var="book" class="table table-striped">
                 <h:column>
                     <f:facet name="header">Id</f:facet>
                     <h:outputText value="#{book.id}"/>

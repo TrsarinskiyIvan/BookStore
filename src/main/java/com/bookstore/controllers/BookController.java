@@ -1,33 +1,26 @@
 package com.bookstore.controllers;
 
+import com.bookstore.dao.Dao;
 import com.bookstore.entitys.Author;
 import com.bookstore.entitys.Book;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
-import com.bookstore.dao.Dao;
-import com.bookstore.utils.UtilsBean;
-import java.util.Objects;
-import javax.faces.context.FacesContext;
 
 @Named
 @SessionScoped
-public class BookController implements Serializable {
+public class BookController extends AbstractController<Book> {
 
     @EJB(beanName = "bookDao")
-    private Dao<Book> bookDao;
-
-    private Book currentBook;
-
-    private List<Book> books;
+    private Dao<Book> dao;
 
     private List<String> idAuthors;
 
@@ -39,94 +32,16 @@ public class BookController implements Serializable {
 
     private String annotation;
 
-    public List<Book> getBooks() {
-        if (books == null) {
-            books = bookDao.getList();
-        }
-        return books;
+    @Override
+    @PostConstruct
+    protected void init() {
+        super.init();
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-//    public Dao getAuthorDao() {
-//        return authorDao;
-//    }
-//
-//    public void setAuthorDao(Dao authorDao) {
-//        this.authorDao = authorDao;
-//    }
-
-    public Dao getBookDao() {
-        return bookDao;
-    }
-
-    public List<String> getIdAuthors() {
-        return idAuthors;
-    }
-
-    public void setIdAuthors(List<String> idAuthors) {
-        this.idAuthors = idAuthors;
-    }
-
-    public void setBookDao(Dao bookDao) {
-        this.bookDao = bookDao;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Part getCover() {
-        return cover;
-    }
-
-    public void setCover(Part cover) {
-        this.cover = cover;
-    }
-
-    public Part getFile() {
-        return file;
-    }
-
-    public void setFile(Part file) {
-        this.file = file;
-    }
-
-    public String getAnnotation() {
-        return annotation;
-    }
-
-    public void setAnnotation(String annotation) {
-        this.annotation = annotation;
-    }
-    //user's methods
-
-    public Book getCurrentBook() {
-
-        Long id = UtilsBean.getId(FacesContext.getCurrentInstance(), "id_book");
-        if (id == null) {
-            return this.currentBook;
-        }
-        if (currentBook == null || !Objects.equals(id, currentBook.getId())) {
-            currentBook = bookDao.read(id);
-        }
-
-        return this.currentBook;
-    }
-
-//admin's methods
-    public String create() {
+    @Override
+    public void create() {
 
         List<Author> authors = new ArrayList();
-//        for (String s : idAuthors) {
-//            authors.add((Author) authorDao.read(Long.valueOf(s)));
-//        }
 
         for (String s : idAuthors) {
             Author a = new Author();
@@ -145,33 +60,68 @@ public class BookController implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        bookDao.create(tmp);
-        books = bookDao.getList();
 
-        title = "";
+        getDao().create(tmp);
+
+        title = null;
         cover = null;
         file = null;
-        annotation = "";
+        annotation = null;
+        init();
 
-        return null;
     }
 
-    public String edit(Book b) {
-        b.setEditable(true);
-        return null;
+    public Book getCurrentBook() {
+        return getCurrentT("id_book");
     }
 
-    public String update(Book b) {
-        bookDao.update(b);
-        b.setEditable(false);
-        books = bookDao.getList();
-        return null;
+    public String getAnnotation() {
+        return annotation;
     }
 
-    public String delete(Book b) {
-        bookDao.delete(b);
-        books = bookDao.getList();
-        return null;
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
+    }
+
+    public Part getCover() {
+        return cover;
+    }
+
+    public void setCover(Part cover) {
+        this.cover = cover;
+    }
+
+    public List<String> getIdAuthors() {
+        return idAuthors;
+    }
+
+    public void setIdAuthors(List<String> idAuthors) {
+        this.idAuthors = idAuthors;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
+    @Override
+    public Dao getDao() {
+        return dao;
+    }
+
+    public void setDao(Dao dao) {
+        this.dao = dao;
     }
 
 }

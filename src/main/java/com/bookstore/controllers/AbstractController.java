@@ -1,4 +1,4 @@
-package com.bookstore.controllers.alter;
+package com.bookstore.controllers;
 
 import com.bookstore.dao.Dao;
 import com.bookstore.utils.Paginator;
@@ -35,6 +35,7 @@ public abstract class AbstractController<T extends AbstractEntity> implements Se
 
     public void update(T t) {
         getDao().update(t);
+        t.setEditable(false);
     }
 
     public void edit(T t) {

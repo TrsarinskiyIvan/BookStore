@@ -5,9 +5,9 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:define name="content">
-        <h3><h:outputLabel value="#{authorControllerAlter.getCurrentAuthor()}"/></h3>
+        <h3><h:outputLabel value="#{authorController.getCurrentAuthor()}"/></h3>
         <h4>Books:</h4>
-        <h:dataTable value="#{authorControllerAlter.getCurrentAuthor().books}" var="book">
+        <h:dataTable value="#{authorController.getCurrentAuthor().books}" var="book">
             <h:column>
                 <h:link value="#{book}" outcome="book">
                     <f:param name="id_book" value="#{book.id}"/>
